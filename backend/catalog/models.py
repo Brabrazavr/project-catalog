@@ -1,5 +1,4 @@
 from django.db import models
-from django.views.generic import ListView
 
 class Project(models.Model):
     title = models.CharField("Название проекта", max_length=255)
@@ -43,6 +42,10 @@ class Project(models.Model):
         ("national", "Всероссийский"),
     ]
     scale = models.CharField("Масштаб проекта", max_length=15, choices=SCALE_CHOICES, default="")
+
+    perspectives = models.CharField("Наличие перспектив", choices=[("Yes", "Да"), ("No", "Нет"),], default=("No", "Нет"))
+
+    customer = models.CharField("Заказчик", choices=[("Inner", "Внутренний"), ("Outer", "Внешний"), ("Not stated", "Не указано")], default=("Not stated", "Не указано"))
 
     class Meta:
         verbose_name = "Проект"

@@ -1,0 +1,21 @@
+{% extends "catalog/base_generic.html" %}
+
+{% block content %}
+  <h1>Проекты</h1>
+
+  <form method="get" class="mb-3">
+    {{ form.as_p }}
+    <button type="submit">Найти</button>
+  </form>
+
+  <ul>
+    {% for project in projects %}
+      <li>
+        <strong>{{ project.title }}</strong>  
+        ({{ project.year }}, {{ project.get_project_type_display }}, Автор: {{ project.author }})
+      </li>
+    {% empty %}
+      <li>Нет доступных проектов.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
