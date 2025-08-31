@@ -9,5 +9,5 @@ urlpatterns = [
     path("project/<int:pk>/", project_detail, name="project_detail"),
     path("login/", auth_views.LoginView.as_view(template_name="catalog/login.html"), name="login"),
     path("logout/", auth_views.LogoutView.as_view(), name="logout"),
-    path("projects/", project_list, name="project-list"),
+    path("projects/", project_list, name="project_list"),
 ]

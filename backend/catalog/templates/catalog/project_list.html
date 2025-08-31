@@ -9,13 +9,15 @@
   </form>
 
   <ul>
-    {% for project in projects %}
-      <li>
-        <strong>{{ project.title }}</strong>  
-        ({{ project.year }}, {{ project.get_project_type_display }}, Автор: {{ project.author }})
-      </li>
-    {% empty %}
-      <li>Нет доступных проектов.</li>
-    {% endfor %}
-  </ul>
+  {% for project in projects %}
+    <li>
+      <a href="{% url 'project_detail' project.pk %}">
+        <strong>{{ project.title }}</strong>
+      </a>
+      ({{ project.year }}, {{ project.get_project_type_display }}, Автор: {{ project.author }})
+    </li>
+  {% empty %}
+    <li>Нет доступных проектов.</li>
+  {% endfor %}
+</ul>
 {% endblock %}
