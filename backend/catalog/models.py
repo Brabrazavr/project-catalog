@@ -1,4 +1,5 @@
 from django.db import models
+from django.views.generic import ListView
 
 class Project(models.Model):
     title = models.CharField("Название проекта", max_length=255)
