@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ project.title }}</title>
-</head>
-<body>
+{% extends "catalog/base_generic.html" %}
+
+{% block content %}
     <h1>{{ project.title }}</h1>
     <p><strong>Учебный год:</strong> {{ project.get_year_display }}</p>
     <p><strong>Тип проекта:</strong> {{ project.get_project_type_display }}</p>
@@ -12,5 +8,9 @@
     <p><strong>Супервайзер:</strong> {{ project.supervisor }}</p>
     <p><strong>Уровень:</strong> {{ project.get_level_display }}</p>
     <p><strong>Масштаб:</strong> {{ project.get_scale_display }}</p>
-</body>
-</html>
+    {% if project in user.saved_projects.all %}
+    <a href="{% url 'remove_project' project.pk %}">Удалить из избранного</a>
+    {% else %}
+    <a href="{% url 'save_project' project.pk %}">Сохранить в избранное</a>
+    {% endif %}
+{% endblock %}

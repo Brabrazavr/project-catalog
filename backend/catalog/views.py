@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Project
 from django.contrib.auth.decorators import login_required
 from .forms import ProjectFilterForm
@@ -9,6 +9,7 @@ def project_detail(request, pk):
     project = get_object_or_404(Project, pk=pk)
     return render(request, "catalog/project_detail.html", {"project": project})
 
+@login_required
 def main(request):
     return render(request, "catalog/main.html")
 
@@ -39,3 +40,20 @@ def project_list(request):
             projects = projects.filter(customer=form.cleaned_data["customer"])
 
     return render(request, "catalog/project_list.html", {"form": form, "projects": projects})
+
+@login_required
+def save_project(request, pk):
+    project = get_object_or_404(Project, pk=pk)
+    request.user.saved_projects.add(project)
+    return redirect("project_detail", pk=pk)
+
+@login_required
+def remove_project(request, pk):
+    project = get_object_or_404(Project, pk=pk)
+    request.user.saved_projects.remove(project)
+    return redirect("selected_projects")
+
+@login_required
+def selected_projects(request):
+    projects = request.user.saved_projects.all()
+    return render(request, "catalog/selected_projects.html", {"projects": projects})

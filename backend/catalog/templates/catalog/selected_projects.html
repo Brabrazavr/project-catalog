@@ -1,0 +1,17 @@
+{% extends "catalog/base_generic.html" %}
+
+{% block content %}
+  <h1>Избранные проекты</h1>
+
+  <ul>
+    {% for project in projects %}
+      <li>
+        <a href="{% url 'project_detail' project.pk %}">{{ project.title }}</a>
+        ({{ project.year }}, Автор: {{ project.author }})
+        <a href="{% url 'remove_project' project.pk %}">Удалить</a>
+      </li>
+    {% empty %}
+      <li>Нет сохранённых проектов.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

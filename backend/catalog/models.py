@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 class Project(models.Model):
     title = models.CharField("Название проекта", max_length=255)
@@ -46,6 +47,12 @@ class Project(models.Model):
     perspectives = models.CharField("Наличие перспектив", choices=[("Yes", "Да"), ("No", "Нет"),], default=("No", "Нет"))
 
     customer = models.CharField("Заказчик", choices=[("Inner", "Внутренний"), ("Outer", "Внешний"), ("Not stated", "Не указано")], default=("Not stated", "Не указано"))
+
+    saved_by = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        related_name="saved_projects",
+        blank=True
+    )
 
     class Meta:
         verbose_name = "Проект"
