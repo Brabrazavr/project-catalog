@@ -1,5 +1,5 @@
 from django import forms
-from .models import Project
+from .models import Project, Tag
 
 class ProjectFilterForm(forms.Form):
     title = forms.CharField(label="Название", required=False)
@@ -11,3 +11,10 @@ class ProjectFilterForm(forms.Form):
     scale = forms.ChoiceField(label="Масштаб", choices=[("", "Все")] + Project.SCALE_CHOICES, required=False)
     perspectives = forms.ChoiceField(label="Перспективы", choices=[("", "Все"), ("Yes", "Да"), ("No", "Нет")], required=False)
     customer = forms.ChoiceField(label="Заказчик", choices=[("", "Все"), ("Inner", "Внутренний"), ("Outer", "Внешний"), ("Not stated", "Не указано")], required=False)
+
+    tags = forms.ModelMultipleChoiceField(
+        queryset=Tag.objects.all(),
+        required=False,
+        widget=forms.CheckboxSelectMultiple,  # можно использовать Checkbox или SelectMultiple
+        label="Теги"
+    )

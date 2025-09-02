@@ -54,9 +54,21 @@ class Project(models.Model):
         blank=True
     )
 
+    tags = models.ManyToManyField("Tag", related_name="projects", blank=True)
+
     class Meta:
         verbose_name = "Проект"
         verbose_name_plural = "Проекты"
 
     def __str__(self):
         return f"{self.title} ({self.year})"
+
+class Tag(models.Model):
+    name = models.CharField("Название тега", max_length=50, unique=True)
+
+    class Meta:
+        verbose_name = "Тег"
+        verbose_name_plural = "Теги"
+
+    def __str__(self):
+        return self.name

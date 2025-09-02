@@ -39,6 +39,10 @@ def project_list(request):
         if form.cleaned_data["customer"]:
             projects = projects.filter(customer=form.cleaned_data["customer"])
 
+        tags = form.cleaned_data.get("tags")
+        if tags:
+            projects = projects.filter(tags__in=tags).distinct()
+        
     return render(request, "catalog/project_list.html", {"form": form, "projects": projects})
 
 @login_required
